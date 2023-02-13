@@ -11,7 +11,7 @@ namespace MBS.Tools
     public class EditorAudioPlayer : EditorWindow
     {
         private AudioClip m_Sound;
-        private static float m_SoundVolume=1;
+        private static float m_SoundVolume = 1;
         private float m_ClipProgress;
         private float m_NewClipProgress;
         private float m_ClipLength;
@@ -550,7 +550,7 @@ namespace MBS.Tools
                         m_CurrentAudioSource.time = m_NewClipProgress;
                 }
 
-                m_CurrentAudioSource.volume = m_SoundVolume;
+                m_CurrentAudioSource.volume = Mathf.Pow(100, -(1 - m_SoundVolume))-.01f;
                 float decimals = m_ClipLength > 1 ? 1 : 10;
                 m_ClipProgress = Mathf.RoundToInt(m_CurrentAudioSource.time * decimals) / decimals;
                 m_CurrentAudioSource.loop = m_SelectedSounds.Count <= 1 ? m_LoopSelection : false;
@@ -644,7 +644,7 @@ namespace MBS.Tools
                 m_CurrentAudioSource.playOnAwake = true;
                 m_CurrentAudioSource.clip = m_Sound;
                 m_CurrentAudioSource.loop = m_SelectedSounds.Count <= 1 ? m_LoopSelection : false;
-                m_CurrentAudioSource.volume = m_SoundVolume;
+                m_CurrentAudioSource.volume = Mathf.Pow(100, -(1 - m_SoundVolume)) - .01f;
                 m_ClipProgress = 0;
                 m_CurrentAudioSource.Play();
                 m_IsPlaying = true;
