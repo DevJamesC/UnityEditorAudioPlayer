@@ -3,12 +3,13 @@ Thank you for downloading the Editor Audio Player by Madboy Studios!
 The Audio Player provides an option to listen to sound files in edit mode without needing to set up an audio source.
 It works by generating, managing, and cleaning up a gameobject with an audio source while in edit mode.
 
+Project on Github: https://github.com/DevJamesC/UnityEditorAudioPlayer
+
 
 
 Accessing the Audio Player
 1. Open the Editor Audio Player window by finding the "Tools" tab in the top left menu.
 2. Tools->Madboy Studios->Editor Audio Player
-
 
 
 
@@ -38,4 +39,4 @@ File: Outlines the file currently queued or playing.
 
 
 Notes
-1. When selecting a sound file, unity does some inital loading and caching when queuing up the playlist. This is usually instantanious with single files, but will induce lag or freezing on large selections when selected for the first time.
+1. When selecting a sound file, unity does some inital loading and caching when queuing up the playlist. This is usually instantanious with single files, but will induce some lag or freezing on large selections when selected for the first time.

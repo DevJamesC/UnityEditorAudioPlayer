@@ -11,7 +11,7 @@ namespace MBS.Tools
     public class EditorAudioPlayer : EditorWindow
     {
         private AudioClip m_Sound;
-        private float m_SoundVolume=1;
+        private static float m_SoundVolume=1;
         private float m_ClipProgress;
         private float m_NewClipProgress;
         private float m_ClipLength;
