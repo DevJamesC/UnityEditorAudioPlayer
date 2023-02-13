@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Windows;
 
 namespace MBS.Tools
 {
@@ -172,9 +174,27 @@ namespace MBS.Tools
                 m_ToggleButtonStyleToggled.normal.background = m_ToggleButtonStyleToggled.active.background;
             }
 
+            m_MediaPlayButtonTexture = null;
+            m_MediaPauseButtonTexture = null;
+            m_MediaStopButtonTexture = null;
+            m_MediaNextButtonTexture = null;
+            m_MediaPreviousButtonTexture = null;
             if (m_MediaPlayButtonTexture == null)
             {
-                var assets = AssetDatabase.FindAssets("t:texture2D").Select(AssetDatabase.GUIDToAssetPath).Select(AssetDatabase.LoadAssetAtPath<Texture2D>).Where(x => (x.name.Contains("Media")));
+                string path = "";
+                IEnumerable<DirectoryInfo> hdDirectoryInWhichToSearch = new DirectoryInfo($"{Paths.assets}").EnumerateDirectories("MadboyStudios", SearchOption.AllDirectories);
+                foreach (var dir in hdDirectoryInWhichToSearch)
+                {
+                    if (dir.Name == "MadboyStudios")
+                    {
+                        string[] splitStr = dir.FullName.Split("Assets");
+                        path = $"Assets/{splitStr[splitStr.Length - 1]}/EditorAudioPlayerPlugin/ButtonIcons/";
+                        break;
+                    }
+
+                }
+                //Debug.Log(path);
+                var assets = AssetDatabase.FindAssets("t:texture2D", new[] { path }).Select(AssetDatabase.GUIDToAssetPath).Select(AssetDatabase.LoadAssetAtPath<Texture2D>).Where(x => (x.name.Contains("Media")));
                 foreach (var asset in assets)
                 {
                     switch (asset.name)
@@ -550,7 +570,7 @@ namespace MBS.Tools
                         m_CurrentAudioSource.time = m_NewClipProgress;
                 }
 
-                m_CurrentAudioSource.volume = Mathf.Pow(100, -(1 - m_SoundVolume))-.01f;
+                m_CurrentAudioSource.volume = Mathf.Pow(100, -(1 - m_SoundVolume)) - .01f;
                 float decimals = m_ClipLength > 1 ? 1 : 10;
                 m_ClipProgress = Mathf.RoundToInt(m_CurrentAudioSource.time * decimals) / decimals;
                 m_CurrentAudioSource.loop = m_SelectedSounds.Count <= 1 ? m_LoopSelection : false;
