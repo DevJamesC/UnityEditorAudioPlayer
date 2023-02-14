@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Windows;
@@ -174,27 +172,17 @@ namespace MBS.Tools
                 m_ToggleButtonStyleToggled.normal.background = m_ToggleButtonStyleToggled.active.background;
             }
 
-            m_MediaPlayButtonTexture = null;
-            m_MediaPauseButtonTexture = null;
-            m_MediaStopButtonTexture = null;
-            m_MediaNextButtonTexture = null;
-            m_MediaPreviousButtonTexture = null;
             if (m_MediaPlayButtonTexture == null)
             {
-                string path = "";
-                IEnumerable<DirectoryInfo> hdDirectoryInWhichToSearch = new DirectoryInfo($"{Paths.assets}").EnumerateDirectories("MadboyStudios", SearchOption.AllDirectories);
-                foreach (var dir in hdDirectoryInWhichToSearch)
-                {
-                    if (dir.Name == "MadboyStudios")
-                    {
-                        string[] splitStr = dir.FullName.Split("Assets");
-                        path = $"Assets/{splitStr[splitStr.Length - 1]}/EditorAudioPlayerPlugin/ButtonIcons/";
-                        break;
-                    }
 
-                }
-                //Debug.Log(path);
-                var assets = AssetDatabase.FindAssets("t:texture2D", new[] { path }).Select(AssetDatabase.GUIDToAssetPath).Select(AssetDatabase.LoadAssetAtPath<Texture2D>).Where(x => (x.name.Contains("Media")));
+                string[] folderAsset = AssetDatabase.FindAssets("t:Folder MadboyStudios");
+                string path = AssetDatabase.GUIDToAssetPath(folderAsset[0]);
+
+                var assets = AssetDatabase.FindAssets("t:texture2D", new[] { path }).
+                    Select(AssetDatabase.GUIDToAssetPath).
+                    Select(AssetDatabase.LoadAssetAtPath<Texture2D>).
+                    Where(x => (x.name.Contains("Media")));
+
                 foreach (var asset in assets)
                 {
                     switch (asset.name)
