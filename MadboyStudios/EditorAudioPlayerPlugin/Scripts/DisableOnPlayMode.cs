@@ -4,14 +4,14 @@ using UnityEngine;
 
 namespace MBS.Tools
 {
-    public class DestroyOnPlayMode : MonoBehaviour
+    public class DisableOnPlayMode : MonoBehaviour
     {
 
         // Update is called once per frame
         void Update()
         {
             if (Application.isPlaying)
-                DestroyImmediate(gameObject, true);
+                gameObject.SetActive(false);
         }
     }
 }

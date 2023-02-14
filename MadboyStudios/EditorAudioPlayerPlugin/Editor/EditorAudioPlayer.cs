@@ -647,7 +647,7 @@ namespace MBS.Tools
                 m_CurrentAudioSource = m_CurrentSoundObj.AddComponent<AudioSource>();
 
                 if (!Application.isPlaying)
-                    m_CurrentSoundObj.AddComponent<DestroyOnPlayMode>();
+                    m_CurrentSoundObj.AddComponent<DisableOnPlayMode>();
 
                 m_CurrentAudioSource.playOnAwake = true;
                 m_CurrentAudioSource.clip = m_Sound;
@@ -677,6 +677,10 @@ namespace MBS.Tools
             m_NewClipProgress = 0;
             m_IsPlaying = false;
             m_IsPaused = false;
+
+            if (!m_PopulateWithFilesSelected && m_SelectedSounds != null)
+                m_SelectedSounds.Clear();
+
 
             if (hardStop || m_tempHoldOnSoftStop)
             {
