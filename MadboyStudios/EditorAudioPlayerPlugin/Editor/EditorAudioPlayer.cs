@@ -467,8 +467,10 @@ namespace MBS.Tools
         {
             GUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
+            GUI.enabled = !m_PopulateWithFilesSelected;
             GUILayout.Label(new GUIContent("File: ", m_ClipFileTooltip));
             m_Sound = EditorGUILayout.ObjectField("", m_Sound, typeof(AudioClip), false, GUILayout.MinWidth(300)) as AudioClip;
+            GUI.enabled = true;
 
             GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();
@@ -497,7 +499,7 @@ namespace MBS.Tools
             bool showPlaylist = false;
             if (m_SelectedSounds != null)
             {
-                if (m_SelectedSounds.Count > 0)
+                if (m_SelectedSounds.Count > 0 && m_PopulateWithFilesSelected)
                     showPlaylist = true;
             }
 
